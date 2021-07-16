@@ -1,0 +1,6 @@
+animal_adoption/__pycache__
+animal_adoption/db.sqlite
+animal_adoption/models/__pycache__/
+animal_adoption/tests/__pycache__/
+animal_adoption/tests/__pycache__/
+.DS_Store
