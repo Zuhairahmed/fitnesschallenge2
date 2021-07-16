@@ -16,7 +16,3 @@ The Neighborhood Cookbook is a web app that seeks to utilize a web scraping modu
 6. Run `flask run` in terminal
 5. Navigate to the website through `http://127.0.0.1:5000` or `http://localhost:5000`
 
-## Credits
-- [Matthew Esqueda](https://github.com/matthewjw2007)
-- [Ting Sheppy](https://github.com/pdxting)
-- [Brian Sprague](https://github.com/brian-sprague)
