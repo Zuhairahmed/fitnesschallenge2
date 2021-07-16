@@ -1,6 +1,8 @@
-animal_adoption/__pycache__
-animal_adoption/db.sqlite
-animal_adoption/models/__pycache__/
-animal_adoption/tests/__pycache__/
-animal_adoption/tests/__pycache__/
+
+venv/
+__pycache__
+.idea/
+app/.DS_Store
 .DS_Store
+app.db
+dump.rdb

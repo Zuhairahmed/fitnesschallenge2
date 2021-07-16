@@ -1,58 +1,22 @@
-# Usage Instructions
-URL: https://fitnesschallenge2.herokuapp.com/ 
+# CS467_W2020_Capstone
+###### Repository for "The Neighborhood Cookbook"
 
-1. Register as an adopter user on the Sign up page.
-2. Go to the Login page and login with the information you have registered.
-3. Animal profiles will appear and you can browse the profiles of your favorite animals.
-4. If the animal status is available, you can click the "Adopt this animal" button to send an adoption request to the shelter.
-5. Click "advanced" next to the search bar to narrow down the list of animal profiles.
+## Purpose
+The Neighborhood Cookbook is a web app that seeks to utilize a web scraping module to parse out recipe details from your favorite recipe websites, allowing you to reference all of your favorite recipes while bypassing cumbersome ads and needless storytelling. 
 
+## How to run locally
 
-# Run the backend server by Docker
-If you run the app for the first time, please run this command.
+**NOTE: This repository requires Python 3 to run locally. [Go here](https://www.python.org/downloads/release/python-381/) if you need to install Python 3.**
 
-```
-docker-compose up --build
-```
+1. Clone the git repository into your local directory of choice
+2. Run `pip3 install -r requirements.txt` in terminal
+3. Run `flask db init`, `flask db stamp head`, `flask db migrate`, and `flask db upgrade` in that order in terminal
+4. Run `redis-server &` in terminal
+5. Run `rq worker &` in terminal
+6. Run `flask run` in terminal
+5. Navigate to the website through `http://127.0.0.1:5000` or `http://localhost:5000`
 
-Press Ctrl+C to quit
-
-
-Next time, you just run
-```
-docker-compose up
-```
-
-# Run the frontend
-First, go to front_end directory.
-
-```
-cd animal_adoption/front_end/
-```
-
-Then, run the following commands
-```
-npm install
-npm start
-```
-
-# Reset local database
-```
-make reset_local_sqlite
-```
-
-### How to get into a Docker container
-First, check your container id
-```
-docker ps
-```
-
-Then, run the command.
-```
-docker exec -it {CONTAINER_ID} /bin/bash
-```
-
-After connecting to your container, if you want to initialize your DB data, run the following command
-```
-python animal_adoption/models/initialize_db_data.py 
-```
+## Credits
+- [Matthew Esqueda](https://github.com/matthewjw2007)
+- [Ting Sheppy](https://github.com/pdxting)
+- [Brian Sprague](https://github.com/brian-sprague)

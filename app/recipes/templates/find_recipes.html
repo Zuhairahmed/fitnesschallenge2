@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="form-group" id="recipe-search">
+        <form class="form-group" method="post" action="{% if current_user.is_anonymous%}{{ url_for('recipes.find_recipes') }}{% else %}{{ url_for('recipes.user_find_recipes', user_id=current_user.id) }}{% endif %}">
+            {{ form.hidden_tag() }}
+            <p id="find-recipe-search-box">
+                {{ form.ingredients.label }}
+                {{ form.ingredients(size=32) }}
+            </p>
+            <input type="checkbox" id="all-recipes-checkbox" name="allRecipes" value="All Recipes">
+            <label class="find-recipe-checkbox-labels" for="all-recipes-checkbox">All Recipes</label>
+            <input type="checkbox" id="food-network-checkbox" name="foodNetwork" value="Food Network">
+            <label class="find-recipe-checkbox-labels" for="food-network-checkbox">Food Network</label>
+            <input type="checkbox" id="simply-recipes-checkbox" name="simplyRecipes" value="Simply Recipes">
+            <label class="find-recipe-checkbox-labels" for="simply-recipes-checkbox">Simply Recipes</label>
+            <input type="checkbox" id="all-sites-checkbox" name="allSites" value="All Sites">
+            <label class="find-recipe-checkbox-labels" for="all-sites-checkbox">All Sites</label>
+            <p id="find-recipe-submit-btn">
+                {{ form.submit }}
+            </p>
+        </form>
+        <hr id="hr-find-recipes">
+    </div>
+
+    {% if payload.results %}
+    <div id="srch-rslts-div">
+        <h1 id="results-header">Results</h1>
+        <div id="results-div" class="col">
+            {% set count = [ ] %}
+            {% for website, recipes in payload.results.items() %}
+            <h4 id="website-name">Website: {% if website == "food_network" %} FoodNetwork.com {% elif website == "allrecipes" %} AllRecipes.com {% elif website == 'simply_recipes' %} SimplyRecipes.com {% endif %}</h4>
+            <h5 id="ingredient-name">Recipe(s):</h5>
+                <hr id="results-hr">
+                <ol id="results-ol">
+                    {% for recipe in recipes %}
+                    <li class="li-number">
+                        <form action="{{url_for('users.save_recipe')}}" method="post">
+                            {% set __ = count.append(1) %}
+                            <a href="{{url_for('recipes.view_recipe')}}?type={{website}}&url={{recipe.URL}}">
+                                <p class="rcp-picture"><img class="recipe-picture" src={{recipe.image}} width="100" height="100"></p>
+                                <p class="recipe-title" id="recipe-title{{count|length}}">Recipe Name: {{recipe.title}}</p>
+                            </a>
+                            <input id="title-input{{count|length}}" type="text" value="{{recipe.title}}" name="title" hidden>
+                            <input id="url-input{{count|length}}" type="text" value="{{recipe.URL}}" name="url" hidden>
+                            <input id="user-input{{count|length}}" type="text" value="{{current_user.id}}" name="user" hidden>
+                            <input id="type-input{{count|length}}" type="text" value="{{website}}" name="type" hidden>
+                            <p class="recipe-link">Source: <a target="_blank" href={{recipe.URL}}>Link</a></p>
+                            <p class="recipe-rating">{{ recipe.stars }}</p>
+                            <p>
+                                {% set ns = namespace(found=false) %}
+                                {% for name in saved_recipes %}
+                                    {% if recipe.title == name %}
+                                    {% set ns.found = true %}
+                                    {% endif %}
+                                    {% endfor %}
+                                {% if current_user.is_anonymous or ns.found == true %}
+                                {% else %}
+                                <button type="button" class="save-recipe-btn" data-count="{{count|length}}">Save Recipe</button>
+                                {% endif %}
+                            </p>
+                            <li id="recipe-url{{count|length}}" hidden>{{recipe.URL}}</li>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ol>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $('.save-recipe-btn').click(function() {
+                let button = $(this);
+                let count = $(this).attr('data-count');
+                $.post("/users/recipes", {
+                    title: $('#title-input' + count).val(),
+                    url: $('#url-input' + count).val(),
+                    user: $('#user-input' + count).val(),
+                    type: $('#type-input' + count).val()
+                },
+                function(data, status) {
+                    if (status === 'success') {
+                        button.toggle();
+                    }
+                    else {
+                        alert("Error with saving recipe.\nStatus: " + status);
+                    }
+                });
+            });
+        });
+    </script>
+
+    {% elif payload.message %}
+
+            <div id="srch-rslts-div">
+                <h1 id="results-header">Your search has begun!</h1>
+                <p>
+                    {{payload.message}}
+                    
+                    Please check for the results of the search under "My Tasks" on the right side of the Navigation Bar.
+                </p>
+            </div>
+    {% else %}
+    {% endif %}
+
+{% endblock %}
