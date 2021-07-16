@@ -1,5 +1,5 @@
 # Usage Instructions
-URL: https://osu-cs467-team-chinchillas.herokuapp.com/
+URL: https://fitnesschallenge2.herokuapp.com/ 
 
 1. Register as an adopter user on the Sign up page.
 2. Go to the Login page and login with the information you have registered.
