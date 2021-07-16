@@ -1,5 +1,4 @@
-# CS467_W2020_Capstone
-###### Repository for "The Neighborhood Cookbook"
+Website: https://fitnesschallenge2.herokuapp.com/index
 
 ## Purpose
 The Neighborhood Cookbook is a web app that seeks to utilize a web scraping module to parse out recipe details from your favorite recipe websites, allowing you to reference all of your favorite recipes while bypassing cumbersome ads and needless storytelling. 
