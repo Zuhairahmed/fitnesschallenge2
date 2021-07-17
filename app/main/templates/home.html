@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <div class="row">
+            <div class="col">
+                <h3 id="home-title">Welcome to <br>Friends Fitness Challenge</h3>
+                <hr id="hr-home">
+                <h5>Site Features:</h5>
+                <ul>
+                    <li>Crowd Sourced Fitness Tracker App</li>
+                    <li>Get healthy and stay fit</li>
+                    <li>Get recipes without the storytelling</li>
+                </ul>
+            </div>
+            <hr class="vertical-line">
+            <div class="col">
+                {# current_user variable comes from Flask-Login #}
+                {% if current_user.is_anonymous %}
+                    <h3>Log In</h3>
+                    {% if message %}
+                    <div class="login-error-div">
+                        <p class="login-error-p">
+                            {{ message['1'] }}
+                            <br>
+                            {{ message['2'] }}
+                        </p>
+                    </div>
+                    {% endif %}
+                    <form action="{{ url_for('users.login') }}" method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <p>
+                            {{ form.username.label }}<br>
+                            {{ form.username(size=32) }}
+                        </p>
+                        <p>
+                            {{ form.password.label }}<br>
+                            {{ form.password(size=32) }}
+                        </p>
+                        <p>
+                            {{ form.remember_me() }}
+                            {{ form.remember_me.label }}
+                        </p>
+                        <p>
+                            {{ form.submit() }}
+                        </p>
+                    </form>
+                {% else %}
+                    <h6>Welcome, {{ current_user.username }}</h6>
+                {% endif %}
+            </div>
+            <div class="w-100"></div>
+        </div>
+    </div>
+{% endblock %}

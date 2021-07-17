@@ -1,38 +1,17 @@
-Link: https://fitnesschallenge2.herokuapp.com/
+Website: https://fitnesschallenge2.herokuapp.com/index
 
-# FlaskIntroduction
+## Purpose
+The Neighborhood Cookbook is a web app that seeks to utilize a web scraping module to parse out recipe details from your favorite recipe websites, allowing you to reference all of your favorite recipes while bypassing cumbersome ads and needless storytelling. 
 
-This repo has been updated to work with `Python v3.8` and up.
+## How to run locally
 
-### How To Run
-1. Install `virtualenv`:
-```
-$ pip install virtualenv
-```
+**NOTE: This repository requires Python 3 to run locally. [Go here](https://www.python.org/downloads/release/python-381/) if you need to install Python 3.**
 
-2. Open a terminal in the project root directory and run:
-```
-$ virtualenv env
-```
+1. Clone the git repository into your local directory of choice
+2. Run `pip3 install -r requirements.txt` in terminal
+3. Run `flask db init`, `flask db stamp head`, `flask db migrate`, and `flask db upgrade` in that order in terminal
+4. Run `redis-server &` in terminal
+5. Run `rq worker &` in terminal
+6. Run `flask run` in terminal
+5. Navigate to the website through `http://127.0.0.1:5000` or `http://localhost:5000`
 
-3. Then run the command:
-```
-$ .\env\Scripts\activate
-```
-
-4. Then install the dependencies:
-```
-$ (env) pip install -r requirements.txt
-```
-
-5. Finally start the web server:
-```
-$ (env) python app.py
-```
-
-This server will start on port 5000 by default. You can change this in `app.py` by changing the following line to this:
-
-```python
-if __name__ == "__main__":
-    app.run(debug=True, port=<desired port>)
-```
